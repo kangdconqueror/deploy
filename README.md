@@ -381,3 +381,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 ```
+
+Jika dirasa terlalu lama, kamu juga bisa mencoba ini : https://tiiny.host/host/free-php-hosting/
