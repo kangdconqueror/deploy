@@ -185,3 +185,199 @@ python -m PyInstaller --onefile --windowed --icon=icon.ico --add-data "alarm_sou
 Hasil build dapat dilihat di dalam folder dist.
 
 ![Alarm](Python/dist/Screenshot.png "Alarm.exe")
+
+
+## JAVA JAR
+
+### Requirements
+- JDK minimal versi 17 : https://www.oracle.com/id/java/technologies/downloads/
+
+- Tambahkan path java di environment
+- Buka Command lalu jalankan
+
+``` bash
+java -version
+```
+
+### Program
+Pilih lokasi proyek lalu buat kode:
+``` bash
+code BMICalculatorGUI.java
+```
+
+``` java
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class BMICalculatorGUI {
+
+    public static void main(String[] args) {
+        // Membuat JFrame (Window)
+        JFrame frame = new JFrame("BMI Calculator");
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+
+        // Panel utama dengan padding
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayout(4, 2, 10, 10));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        // Komponen GUI
+        JLabel heightLabel = new JLabel("Tinggi badan (cm):");
+        JTextField heightField = new JTextField();
+
+        JLabel weightLabel = new JLabel("Berat badan (kg):");
+        JTextField weightField = new JTextField();
+
+        JLabel ageLabel = new JLabel("Umur:");
+        JTextField ageField = new JTextField();
+
+        JButton calculateButton = new JButton("Hitung BMI");
+
+        // Panel untuk hasil BMI
+        JPanel resultPanel = new JPanel();
+        resultPanel.setLayout(new BorderLayout());
+        JLabel resultLabel = new JLabel("", SwingConstants.CENTER);
+        resultPanel.add(resultLabel, BorderLayout.CENTER);
+
+        // Tambahkan komponen ke panel utama
+        mainPanel.add(heightLabel);
+        mainPanel.add(heightField);
+        mainPanel.add(weightLabel);
+        mainPanel.add(weightField);
+        mainPanel.add(ageLabel);
+        mainPanel.add(ageField);
+        mainPanel.add(calculateButton);
+
+        // Tambahkan panel utama dan panel hasil ke frame
+        frame.add(mainPanel, BorderLayout.CENTER);
+        frame.add(resultPanel, BorderLayout.SOUTH);
+
+        // Tambahkan ActionListener untuk tombol
+        calculateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    // Ambil input dari pengguna
+                    double height = Double.parseDouble(heightField.getText());
+                    double weight = Double.parseDouble(weightField.getText());
+                    int age = Integer.parseInt(ageField.getText());
+
+                    // Hitung BMI
+                    double heightInMeters = height / 100;
+                    double bmi = weight / (heightInMeters * heightInMeters);
+
+                    // Tentukan kategori BMI
+                    String category;
+                    if (bmi < 18.5) {
+                        category = "Berat badan kurang";
+                    } else if (bmi >= 18.5 && bmi < 24.9) {
+                        category = "Berat badan normal";
+                    } else if (bmi >= 25 && bmi < 29.9) {
+                        category = "Berat badan berlebih";
+                    } else {
+                        category = "Obesitas";
+                    }
+
+                    // Tampilkan hasil
+                    resultLabel.setText(String.format("<html>BMI: %.2f<br>Kategori: %s</html>", bmi, category));
+                } catch (NumberFormatException ex) {
+                    resultLabel.setText("Input tidak valid!");
+                }
+            }
+        });
+
+        // Tampilkan frame
+        frame.setVisible(true);
+    }
+}
+```
+
+### Test
+
+Compile file kode program:
+``` bash
+javac BMICalculatorGUI.java
+```
+
+Test program:
+``` bash
+java BMICalculatorGUI
+```
+
+### Build
+Sekarang kita akan build file proyek menjadi .jar
+``` bash
+jar cfe BMICalculatorGUI.jar BMICalculatorGUI BMICalculatorGUI*.class
+```
+
+Jika aplikasi tidak dapat dibuka dengan cara klik 2x, coba jalankan:
+``` bash
+java -jar BMICalculatorGUI.jar
+```
+
+![BMICalculatorGUI](Java/Screenshot.png "BMICalculatorGUI.jar")
+
+
+## GITHUB PAGES
+
+https://docs.github.com/en/pages/quickstart
+
+
+## FREE HOSTING
+
+- https://dash.infinityfree.com/register
+- Sign Up for InfinityFree
+- Verify email address
+- Hosting Accounts: Create an account now!
+- InfinityFree $0 forever - Create Now
+- Choose a Domain Name
+- Fill Additional Information
+- Click Create Account
+
+Your account has been created with username if0_38123916! Here are some things you need to know:
+
+- It will take a few minutes for your account to be set up.
+- It can take up to 72 hours for the new domain to be visible everywhere, due to DNS caching.
+- Please login to the control panel once to enable all features.
+- Not sure what to do next? Please see this guide for some ideas on how to get started.
+
+Jika sudah aktif, akses ke FTP menggunakan WinSCP.
+
+Masukkan file berikut ke dalam folder htdocs (dikarenakan free, biasanya agak lambat koneksinya).
+
+``` php
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Menangkap data dari form
+    $name = htmlspecialchars($_POST['name']);
+    $email = htmlspecialchars($_POST['email']);
+    $message = htmlspecialchars($_POST['message']);
+
+    // Menampilkan hasil
+    echo "<h2>Hasil Pengisian Form:</h2>";
+    echo "<strong>Nama:</strong> " . $name . "<br>";
+    echo "<strong>Email:</strong> " . $email . "<br>";
+    echo "<strong>Pesan:</strong> " . nl2br($message) . "<br>";
+} else {
+?>
+    <h2>Form Pengisian Data</h2>
+    <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
+        <label for="name">Nama:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="message">Pesan:</label><br>
+        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+
+        <input type="submit" value="Kirim">
+    </form>
+<?php
+}
+?>
+```
